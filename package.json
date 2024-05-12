@@ -1,0 +1,21 @@
+{
+  "name": "webgenix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+"start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.3.1",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.13",
+    "nodemon": "^3.1.0"
+  }
+}
