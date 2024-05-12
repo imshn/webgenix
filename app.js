@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: "thewebgenix@gmail.com",
-        pass: "Ineedthispassword",
+        pass: "ineedthispassword",
     }
 });
 
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.get("/service", (req, res) => {
-    res.sendFile("service.html", { root: path.join(__dirname, 'public') })
+    res.sendFile("service-details.html", { root: path.join(__dirname, 'public') })
 })
 
 app.get("/about", (req, res) => {

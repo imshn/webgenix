@@ -399,14 +399,32 @@
         $(document).ready(function () {
             $('#contactForm').submit(function (e) {
                 e.preventDefault(); // Prevent form submission
+                const API_USERNAME = 'your-mailtrap-username';
+                const API_PASSWORD = 'your-mailtrap-password';
+                const MAILTRAP_INBOX_ID = 'your-mailtrap-inbox-id';
 
-                // Get form data
-                var formData = {
-                    name: $('#name').val(),
-                    email: $('#email').val(),
-                    email: $('#phone').val(),
-                    message: $('#message').val()
+                // Mailtrap API URL
+                const MAILTRAP_API_URL = `https://mailtrap.io/api/v1/inboxes/${MAILTRAP_INBOX_ID}/messages`;
+
+                // Email data
+                
+                let name = $('#name').val()
+                let email = $('#email').val()
+                let phone = $('#phone').val()
+                let message = $('#message').val()
+
+                const emailData = {
+                    from_email: 'from@example.com',
+                    to_email: 'to@example.com',
+                    subject: 'Test Email from Node.js',
+                    html_body: `<p><b>Name:</b></p> ${name} <br> 
+                                <p><b>Email:</b></p> ${email} <br> 
+                                <p><b>Phone:</b></p> ${phone} <br> 
+                                <p><b>Message:</b></p> ${message}`
                 };
+
+               
+
 
                 // Submit form data using AJAX
                 $.ajax({
