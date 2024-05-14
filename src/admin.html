@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CKEditor Example</title>
+    <!-- Include Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5" style="height: 500px">
+      <h1>Create New Blog</h1>
+      <form id="blogCreation" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="editor">Content</label>
+          <textarea
+            class="form-control"
+            id="editor"
+            name="content"
+            id="content"
+            style="max-height: 500px !important; overflow-y: auto"
+          ></textarea>
+        </div>
+        <button type="submit" onclick="getDataAndSend()" class="btn btn-success">Publish</button>
+      </form>
+
+      <section id="preview" class="container"></section>
+    </div>
+
+    <!-- Include CKEditor Script -->
+    <script src="/assets/vendor/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script>
+      let content;
+
+      class CustomUploadAdapter {
+        constructor(loader, uploadUrl) {
+          this.loader = loader;
+          this.uploadUrl = uploadUrl;
+        }
+
+        upload() {
+          return this.loader.file.then(
+            (file) =>
+              new Promise((resolve, reject) => {
+                const formData = new FormData();
+                formData.append("file", file);
+
+                fetch(this.uploadUrl, {
+                  method: "POST",
+                  body: formData
+                })
+                  .then((response) => {
+                    if (response.ok) {
+                      return response.json();
+                    }
+                    reject(`Upload failed with status ${response.status}`);
+                  })
+                  .then((data) => {
+                    resolve({
+                      default: data.url // Assuming the server returns the URL of the uploaded file
+                    });
+                  })
+                  .catch((error) => {
+                    reject(`Upload failed: ${error}`);
+                  });
+              })
+          );
+        }
+      }
+
+      function CustomUploadAdapterPlugin(editor) {
+        editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+          return new CustomUploadAdapter(loader, "/image");
+        };
+      }
+
+      ClassicEditor.create(document.querySelector("#editor"), {
+        extraPlugins: [CustomUploadAdapterPlugin]
+      }).catch((error) => {
+        console.error(error);
+      });
+
+      // Function to get data and send it to Express
+      function getDataAndSend() {
+        // Get CKEditor instance and its content
+        ClassicEditor.getInstance("editor")
+          .then((editor) => {
+            const data = editor.getData();
+            sendDatatoExpress(data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+      function sendDatatoExpress(data) {
+        $(document).ready(function () {
+          $("#blogCreation").submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+              url: "/create",
+              type: "POST",
+              processData: false,
+              contentType: false,
+              data: { content: JSON.stringify(data) },
+              success: function (response) {
+                console.log("Data sent successfully");
+                console.log(response);
+                $("preview").html(response);
+              },
+              error: function (xhr, status, error) {
+                console.error("Failed to send data");
+              }
+            });
+          });
+        });
+      }
+
+      // Function to send data to Express
+
+      // Send data to Express server using AJAX
+    </script>
+  </body>
+</html>
