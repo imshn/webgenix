@@ -19,19 +19,19 @@ const transporter = nodemailer.createTransport({
 
 
 app.get('/', (req, res) => {
-    res.sendFile("index.html", { root: path.join(__dirname, 'public') })
+    res.sendFile("index.html", { root: path.join(__dirname, 'src') })
 });
 
 app.get("/service", (req, res) => {
-    res.sendFile("service-details.html", { root: path.join(__dirname, 'public') })
+    res.sendFile("service-details.html", { root: path.join(__dirname, 'src') })
 })
 
 app.get("/about", (req, res) => {
-    res.sendFile("about.html", { root: path.join(__dirname, 'public') })
+    res.sendFile("about.html", { root: path.join(__dirname, 'src') })
 })
 
 app.get("/contact", (req, res) => {
-    res.sendFile("contact.html", { root: path.join(__dirname, 'public') })
+    res.sendFile("contact.html", { root: path.join(__dirname, 'src') })
 })
 
 
@@ -63,13 +63,13 @@ app.post('/contact', (req, res) => {
 
 
 app.get("/blogs", (req, res) => {
-    res.sendFile("blogs.html", { root: path.join(__dirname, 'public') })
+    res.sendFile("blogs.html", { root: path.join(__dirname, 'src') })
 })
 
 app.get("/*", (req, res) => {
     // res.redirect("/")
 
-    res.sendFile("/", { root: path.join(__dirname, 'public') })
+    res.sendFile("/", { root: path.join(__dirname, 'src') })
 })
 
 // Start the server
