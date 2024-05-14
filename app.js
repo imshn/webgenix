@@ -36,20 +36,41 @@ app.get("/contact", (req, res) => {
 
 app.post("/contact", (req, res) => {
   const { name, email, phone, message } = req.body;
-
+  const html = `
+    <!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  </head>
+  <body style="font-family: sans-serif;">
+    <div style="display: block; margin: auto; max-width: 600px;" class="main">
+    // <img alt="Inspect with Tabs" src="${path.join(__dirname, "src")}/assets/images/logo/Untitled_design-removebg-preview.png" style="width: 100%;">
+      <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Name</h1>
+      <p>${name}</p>
+      <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Email</h1>
+      <p>${email}</p>
+      <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Phone</h1>
+      <p>${phone}</p>
+      <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Message</h1>
+      <p>${message}</p>
+    </div>
+    <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->
+    <style>
+      .main { background-color: white; }
+      a:hover { border-left-width: 1em; min-height: 2em; }
+    </style>
+  </body>
+</html>`;
   // Create email content
   const mailOptions = {
-    from: "thewebgenix@gmail.com",
-    to: "shahnawaz28april@gmail.com", // Your email address where you want to receive contact form submissions
-    subject: "New Contact Form Submission",
-    html: `<p><b>Name:</b></p> ${name} <br> 
-                <p><b>Email:</b></p> ${email} <br> 
-                <p><b>Phone:</b></p> ${phone} <br> 
-                <p><b>Message:</b></p> ${message}`
+    from: "thewebgenix@webgenix.co.in",
+    to: "thewebgenix@gmail.com", // Your email address where you want to receive contact form submissions
+    subject: `Email from ${name}`,
+    html: html
   };
 
   // Send email
-  transporter.sendMail(mailOptions, (error, info) => {
+  transport.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error(error);
       res.status(500).send("Error sending message");
