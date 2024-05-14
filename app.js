@@ -1,13 +1,34 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const fs = require('fs');
+const multer = require('multer');
 const nodemailer = require("nodemailer");
 
-const port = 3000;
+const port = 4000;
 
 app.use(express.static(path.join(__dirname, "src")));
 app.use(express.urlencoded({ extended: true }));
 // Define routes
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      // Specify the directory where files will be uploaded
+      cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+      // Generate a unique filename for each uploaded file
+      const extension = path.extname(file.originalname);
+      const filename = `${Date.now()}${extension}`;
+      cb(null, filename);
+  }
+});
+
+// Set up multer middleware with the storage configuration
+const upload = multer({ storage: storage });
+
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static('uploads'));
+
 
 var transport = nodemailer.createTransport({
   host: "live.smtp.mailtrap.io",
@@ -44,7 +65,10 @@ app.post("/contact", (req, res) => {
   </head>
   <body style="font-family: sans-serif;">
     <div style="display: block; margin: auto; max-width: 600px;" class="main">
-    // <img alt="Inspect with Tabs" src="${path.join(__dirname, "src")}/assets/images/logo/Untitled_design-removebg-preview.png" style="width: 100%;">
+    // <img alt="Inspect with Tabs" src="${path.join(
+      __dirname,
+      "src"
+    )}/assets/images/logo/Untitled_design-removebg-preview.png" style="width: 100%;">
       <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Name</h1>
       <p>${name}</p>
       <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Email</h1>
@@ -85,6 +109,38 @@ app.post("/contact", (req, res) => {
 
 app.get("/blogs", (req, res) => {
   res.sendFile("blogs.html", { root: path.join(__dirname, "src") });
+});
+
+app.get("/blog/create", (req, res) => {
+  res.sendFile("admin.html", { root: path.join(__dirname, "src") });
+});
+
+app.post('/create', (req, res) => {
+  const content = req.body.content
+  // Process the content here (e.g., save to database, perform other operations)
+  res.send('Content received: ' + content);
+  console.log(req.body)
+});
+
+
+app.post('/image', upload.single('file'), (req, res) => {
+  // The uploaded file is available as req.file
+  if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+  }
+
+  // Construct the URL to access the uploaded file
+  const fileUrl = `http://localhost:${port}/uploads/${req.file.filename}`;
+  console.log(fileUrl)
+
+
+  // Send the URL back to the client
+  res.json({ url: fileUrl });
+});
+
+
+app.get("/blogs/:title", (req, res) => {
+  res.sendFile("blog-details.html", { root: path.join(__dirname, "src") });
 });
 
 app.get("/*", (req, res) => {

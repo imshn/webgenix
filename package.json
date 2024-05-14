@@ -14,7 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.3.1",
+    "@vercel/blob": "^0.23.2",
     "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0"
   }
