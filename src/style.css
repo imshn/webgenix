@@ -57,7 +57,7 @@
 :root {
 	--text-color: #808285;
 	--heading: #191919;
-    --blue-dark: #5956e9;
+    --blue-dark:#4D92AE;
 	--light-gray: #fafafb;
 	--dmsans: 'DM Sans', sans-serif;
 }
@@ -4573,6 +4573,8 @@ button {
     End Contact Section css 
 =========================---*/
 
+
+
 /*---==========================
     16. Start Footer css 
 =========================---*/
@@ -4764,6 +4766,14 @@ button {
 /*---==========================
     End Footer css 
 =========================---*/
+
+/* .button-1.onhover{
+    color: #fff;
+    background-color: #000;
+} */
+.button-1:hover{
+    background-color: #2596be;
+}
 
 
 /*---==========================
