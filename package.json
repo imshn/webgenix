@@ -7,7 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-"start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "vercel-build": "vercel build",
+    "build": ""
   },
   "keywords": [],
   "author": "",
