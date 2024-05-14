@@ -149,9 +149,21 @@ app.get("/*", (req, res) => {
   res.sendFile("/", { root: path.join(__dirname, "src") });
 });
 
+app.get("/team", (req, res) => {
+  // res.redirect("/")
+
+  res.sendFile("team.html", { root: path.join(__dirname, "src") });
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+});
+
+app.get("/contact", (req, res) => {
+  // res.redirect("/")
+
+  res.sendFile("contact.html", { root: path.join(__dirname, "src") });
 });
 
 module.exports = app;
