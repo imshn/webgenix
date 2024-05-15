@@ -107,6 +107,12 @@ app.post("/contact", (req, res) => {
   });
 });
 
+app.get("/team", (req, res) => {
+  // res.redirect("/")
+
+  res.sendFile("team.html", { root: path.join(__dirname, "src") });
+});
+
 app.get("/blogs", (req, res) => {
   res.sendFile("blogs.html", { root: path.join(__dirname, "src") });
 });
@@ -149,11 +155,7 @@ app.get("/*", (req, res) => {
   res.sendFile("/", { root: path.join(__dirname, "src") });
 });
 
-app.get("/team", (req, res) => {
-  // res.redirect("/")
 
-  res.sendFile("team.html", { root: path.join(__dirname, "src") });
-});
 
 // Start the server
 app.listen(port, () => {
