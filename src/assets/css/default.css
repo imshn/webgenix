@@ -778,7 +778,7 @@
   padding-top: 85px; }
 
 .pt-90 {
-  padding-top: 90px; }
+  padding-top: 50px; }
 
 .pt-95 {
   padding-top: 95px; }
@@ -849,8 +849,8 @@
 .pt-205 {
   padding-top: 205px; }
 
-.pt-210 {
-  padding-top: 210px; }
+/* .pt-210 {
+  padding-top: 50px; } */
 
 .pt-215 {
   padding-top: 215px; }
@@ -959,10 +959,10 @@
   padding-bottom: 85px; }
 
 .pb-90 {
-  padding-bottom: 90px; }
+  padding-top: 150px; }
 
 .pb-95 {
-  padding-bottom: 95px; }
+  padding-top: 95px; }
 
 .pb-100 {
   padding-bottom: 100px; }
