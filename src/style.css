@@ -197,7 +197,7 @@ ul.social-link li{
     content: "";
     width: 100%;
     left: 0;
-    background: url(../images/border-1.png) no-repeat;
+    background: none !important;
     background-size: 100% 100%;
     z-index: -1;
     background-position: bottom;
@@ -339,7 +339,6 @@ button {
             align-items: center;
     justify-content: center;
 	padding: 12px 35px;
-	background-color: var(--blue-dark);
 	color: #fff;
 	font-size: 16px;
 	font-family: var(--dmsans);
@@ -4763,6 +4762,11 @@ button {
     height: 60%;
     background: url(https://wordpressriverthemes.com/htmltemp/pixlab/assets/images/footer/footer-page-bg-1.png) no-repeat left;
 }
+
+
+
+
+
 /*---==========================
     End Footer css 
 =========================---*/
